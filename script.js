@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const message = document.getElementById('message');
     const confettiContainer = document.getElementById('confetti-container');
     const giftImage = document.querySelector('.gift-image');
+    const title = document.querySelector('.title');
     
     // Add hover sound effect to gift box
     surpriseBox.addEventListener('mouseenter', () => {
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add subtle movement to gift image
     let animationActive = false;
     function animateGift() {
-        if (animationActive) return;
+        if (animationActive || surpriseBox.classList.contains('clicked')) return;
         
         animationActive = true;
         const randomRotate = Math.random() * 3 - 1.5; // Between -1.5 and 1.5 degrees
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Animate gift occasionally
-    setInterval(animateGift, 3000);
+    const animationInterval = setInterval(animateGift, 3000);
     
     // Array of confetti colors
     const confettiColors = [
@@ -82,8 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Handle click on gift box
     surpriseBox.addEventListener('click', () => {
+        // Prevent multiple clicks
+        if (surpriseBox.classList.contains('clicked')) return;
+        surpriseBox.classList.add('clicked');
+        
+        // Clear animation interval
+        clearInterval(animationInterval);
+        
         // Add shake animation
         surpriseBox.classList.add('shake');
+        
+        // Fade title slightly
+        title.style.opacity = '0.3';
         
         // Play sound (may be blocked by browsers without user interaction)
         try {
@@ -95,11 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show message after a short delay
         setTimeout(() => {
             surpriseBox.classList.remove('shake');
-            message.classList.remove('hidden');
-            message.classList.add('visible');
-            
-            // Create confetti
-            createConfetti();
             
             // Hide the gift box with animation
             surpriseBox.style.transform = 'scale(0.1) rotate(720deg)';
@@ -107,6 +113,15 @@ document.addEventListener('DOMContentLoaded', () => {
             
             setTimeout(() => {
                 surpriseBox.style.display = 'none';
+                
+                // Show message with slight delay to avoid overlap
+                setTimeout(() => {
+                    message.classList.remove('hidden');
+                    message.classList.add('visible');
+                    
+                    // Create confetti
+                    createConfetti();
+                }, 100);
             }, 500);
         }, 500);
     });

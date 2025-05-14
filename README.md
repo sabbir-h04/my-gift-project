@@ -1,6 +1,6 @@
-# Surprise Webpage for Nishat
+# Surprise Webpage for Friends
 
-A fun interactive webpage that shows a surprise message with cool effects.
+A fun, interactive webpage that shows a surprise message with cool effects.
 
 ## Setup Instructions
 
@@ -35,7 +35,7 @@ A fun interactive webpage that shows a surprise message with cool effects.
 
 1. Open the index.html file in a web browser
 2. Have Nishat click on the gift box
-3. Enjoy the surprise message with confetti effect!
+3. Enjoy the surprise message with a confetti effect!
 
 ## Customization
 
